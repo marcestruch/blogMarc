@@ -7,9 +7,9 @@ Route::get('/', function () {
 })->name('inici');
 
 Route::get('/posts', function(){
-    return "Llistat de posts";
+    return view('posts.llistat');
 })->name('posts_llistat');
 
 Route::get('/posts/{id}', function($id){
-    return "Fitxa del post {$id}";
+    return view('posts.fitxa', ['id' => $id]);
 })->where('id', '[0-9]+')->name('posts_fitxa');
