@@ -11,7 +11,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = [];
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -19,7 +20,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return "Nou Post";
     }
 
     /**
@@ -33,17 +34,17 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        return view('posts.show', compact('id'));    
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        return "Edició de post " . $id;
     }
 
     /**
