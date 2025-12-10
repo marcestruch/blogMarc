@@ -18,3 +18,12 @@ php artisan ui bootstrap
 npm install
 npm run build
 ```
+
+### Crear Controlador de recursos
+
+```
+php artisan make:controller PostController -r
+```
+
+Això crearà el fitxer app/Http/Controllers/PostController.php amb els mètodes index, create, store, show, edit, update i destroy.
+
