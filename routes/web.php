@@ -19,5 +19,9 @@ Route::get('/posts/{id}', function($id){
 
 //resource
 
-Route::resource('/posts', PostController::class)
-    ->only(['index', 'show', 'create', 'edit']);
+Route::resource('posts', PostController::class)
+    ->only(['index', 'show', 'create', 'edit'])
+    ->names([
+        'create' => 'posts.crear',
+        'edit' => 'posts.editar',
+    ]);
