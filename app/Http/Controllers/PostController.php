@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -11,7 +12,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = [];
+        $posts = Post::orderBy('titulo')->paginate(5);
         return view('posts.index', compact('posts'));
     }
 
@@ -20,15 +21,16 @@ class PostController extends Controller
      */
     public function create()
     {
-        return "Nou Post";
+        return view('posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        Post::create($request->validated());
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -36,7 +38,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('posts.show', compact('id'));    
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -44,22 +47,26 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        return "Edició de post " . $id;
+        $post = Post::findOrFail($id);
+        return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->validated());
+        return redirect()->route('posts.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        Post::findOrFail($id)->delete();
+        return redirect()->route('posts.index');
     }
 }

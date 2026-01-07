@@ -10,7 +10,7 @@
 
 <body>
     @include('partials.nav')
-    <main>
+    <main class="container mt-4">
         @yield('contenido')
     </main>
     <footer class="text-center mt-4">
