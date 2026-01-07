@@ -23,7 +23,9 @@
                     </div>
                     <div>
                         <a href="{{ route('posts.index') }}" class="btn btn-outline-secondary me-2">Tornar</a>
+                        @if(Auth::id() === $post->usuari_id)
                         <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning">Editar</a>
+                        @endif
                     </div>
                 </div>
             </div>

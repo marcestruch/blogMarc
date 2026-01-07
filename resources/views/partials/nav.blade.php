@@ -25,19 +25,29 @@
             </ul>
 
             <ul class="navbar-nav">
+                @auth
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('posts.create') ? 'active' : '' }}"
                         href="{{ route('posts.create') }}">
                         Nou Post
                     </a>
                 </li>
-
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('logout') }}">Tancar Sessió</a></li>
+                    </ul>
+                </li>
+                @else
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('posts.edit') ? 'active' : '' }}"
-                        href="{{ route('posts.edit', ['post' => 1]) }}">
-                        Editar Post 1
+                    <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
+                        href="{{ route('login') }}">
+                        Iniciar Sessió
                     </a>
                 </li>
+                @endauth
             </ul>
         </div>
     </div>

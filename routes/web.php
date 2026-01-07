@@ -20,3 +20,9 @@ Route::get('/', function () {
 //resource
 
 Route::resource('posts', PostController::class);
+
+use App\Http\Controllers\LoginController;
+
+Route::get('/login', [LoginController::class, 'loginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

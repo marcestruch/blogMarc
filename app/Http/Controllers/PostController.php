@@ -5,8 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 
-class PostController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class PostController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth', except: ['index', 'show']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +39,9 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        Post::create($request->validated());
+        $post = new Post($request->validated());
+        $post->usuari_id = Auth::id();
+        $post->save();
         return redirect()->route('posts.index');
     }
 
@@ -48,6 +60,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+
+        if ($post->usuari_id !== Auth::id()) {
+            abort(403);
+        }
+
         return view('posts.edit', compact('post'));
     }
 
@@ -57,6 +74,11 @@ class PostController extends Controller
     public function update(PostRequest $request, $id)
     {
         $post = Post::findOrFail($id);
+
+        if ($post->usuari_id !== Auth::id()) {
+            abort(403);
+        }
+
         $post->update($request->validated());
         return redirect()->route('posts.index');
     }
@@ -66,7 +88,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::findOrFail($id)->delete();
+        $post = Post::findOrFail($id);
+
+        if ($post->usuari_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $post->delete();
         return redirect()->route('posts.index');
     }
 }

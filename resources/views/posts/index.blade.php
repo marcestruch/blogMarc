@@ -5,9 +5,11 @@
 @section('contenido')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Llistat de posts</h1>
+    @auth
     <a href="{{ route('posts.create') }}" class="btn btn-success">
         <i class="bi bi-plus-lg"></i> Crear Nou Post
     </a>
+    @endauth
 </div>
 
 @if($posts->count() > 0)
@@ -25,6 +27,7 @@
                 </p>
                 <div class="d-flex justify-content-between align-items-center mt-3">
                     <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary btn-sm">Llegir més</a>
+                    @if(Auth::id() === $post->usuari_id)
                     <div class="btn-group">
                         <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-outline-secondary btn-sm">Editar</a>
                         <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline">
@@ -33,6 +36,7 @@
                             <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Estàs segur?')">Eliminar</button>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="card-footer text-muted text-end" style="font-size: 0.8rem;">
