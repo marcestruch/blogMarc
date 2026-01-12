@@ -13,7 +13,7 @@ class PostsSeeder extends Seeder
     public function run(): void
     {
         // Create posts for existing users
-        $users = \App\Models\User::all();
+        $users = \App\Models\Usuari::all();
 
         if ($users->count() > 0) {
             \App\Models\Post::factory(20)->recycle($users)->create();

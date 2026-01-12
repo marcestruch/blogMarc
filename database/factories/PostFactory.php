@@ -19,7 +19,7 @@ class PostFactory extends Factory
         return [
             'titulo' => $this->faker->sentence(),
             'contingut' => $this->faker->paragraph(),
-            'usuari_id' => \App\Models\User::factory(),
+            'usuari_id' => \App\Models\Usuari::factory(),
         ];
     }
 }

@@ -12,7 +12,7 @@ class Comentari extends Model
 
     public function usuari()
     {
-        return $this->belongsTo(User::class, 'usuari_id');
+        return $this->belongsTo(Usuari::class, 'usuari_id');
     }
 
     public function post()
